@@ -34,11 +34,23 @@ def tweak():
     os.symlink("./nadekobot-linux-x64/data", "data")
 
 
-def main():
+def bootstrap():
+    f = open('.fumiko_bootstrap', 'w')
+    f.write('')
+    f.close()
     download("https://gitlab.com/api/v4/projects/9321079/packages/generic/NadekoBot-build/4.3.17/4.3.17-linux-x64-build.tar", "nadeko.tar")
     extract_tar("nadeko.tar", ".")
+    os.remove('nadeko.tar')
     tweak()
     os.system('./nadekobot-linux-x64/NadekoBot')
 
 
-main()
+def start():
+    os.system('./nadekobot-linux-x64/NadekoBot')
+
+
+if '.fumiko_bootstrap' in os.listdir('.'):
+    start()
+else:
+    bootstrap()
+
